@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "pdf converter",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
-    "start": "node toPdf.js"
+    "start": "tsc && node main.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,15 @@
   },
   "homepage": "https://github.com/hajali-amine/cheat-sheets#readme",
   "dependencies": {
-    "md-to-pdf": "^3.3.2"
+    "md-to-pdf": "^3.3.2",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "volta": {
+    "node": "14.17.1",
+    "npm": "7.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.4"
   }
 }
