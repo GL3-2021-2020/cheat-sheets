@@ -1,4 +1,5 @@
 import { promises as fsp } from "fs";
+import * as fs from "fs";
 import * as path from "path";
 import { mdToPdf } from "md-to-pdf";
 
@@ -18,18 +19,30 @@ const getMDFiles = async (
   return r.flatMap((e) => e).filter((e) => e.endsWith(".md"));
 };
 
-export const work = async (): Promise<void> => {
-  const all = await getMDFiles("../", ["../MarkDownToPdfScript", "../.git"]);
-  // console.log(all);
+export const work = async (source: string, target: string): Promise<void> => {
+  if (!fs.existsSync(source)) throw "Source directory does not exist";
+
+  const all = await getMDFiles(source, []);
+  const a = all.map((e) => path.parse(e).dir.split(path.sep));
+
   all.forEach(async (e) => {
     const pdf = await mdToPdf({ path: e }).catch(console.error);
     const temp = path.parse(e);
+
+    // this so error prone god please forgive me
+    // TODO better replace system
+    const newDir = temp.dir.replace(source, target);
+
+    await fsp
+      .access(newDir)
+      .catch(() => fsp.mkdir(newDir, { recursive: true }));
+
     const newName = path.format({
-      root: path.join(temp.dir, temp.name),
+      root: path.join(newDir, temp.name),
       ext: ".pdf",
     });
     if (pdf) await fsp.writeFile(newName, pdf.content);
   });
 };
 
-work();
+work("../Markdown", "../PDF");

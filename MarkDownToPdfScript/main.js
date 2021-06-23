@@ -21,6 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.work = void 0;
 const fs_1 = require("fs");
+const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const md_to_pdf_1 = require("md-to-pdf");
 const getMDFiles = async (filesPath, ignore) => {
@@ -31,14 +32,22 @@ const getMDFiles = async (filesPath, ignore) => {
         .map(async (e) => (await fs_1.promises.stat(e)).isFile() ? [e] : getMDFiles(e, ignore)));
     return r.flatMap((e) => e).filter((e) => e.endsWith(".md"));
 };
-const work = async () => {
-    const all = await getMDFiles("../", ["../MarkDownToPdfScript", "../.git"]);
-    // console.log(all);
+const work = async (source, target) => {
+    if (!fs.existsSync(source))
+        throw "Source directory does not exist";
+    const all = await getMDFiles(source, []);
+    const a = all.map((e) => path.parse(e).dir.split(path.sep));
     all.forEach(async (e) => {
         const pdf = await md_to_pdf_1.mdToPdf({ path: e }).catch(console.error);
         const temp = path.parse(e);
+        // this so error prone god please forgive me
+        // TODO better replace system
+        const newDir = temp.dir.replace(source, target);
+        await fs_1.promises
+            .access(newDir)
+            .catch(() => fs_1.promises.mkdir(newDir, { recursive: true }));
         const newName = path.format({
-            root: path.join(temp.dir, temp.name),
+            root: path.join(newDir, temp.name),
             ext: ".pdf",
         });
         if (pdf)
@@ -46,4 +55,4 @@ const work = async () => {
     });
 };
 exports.work = work;
-exports.work();
+exports.work("../Markdown", "../PDF");
