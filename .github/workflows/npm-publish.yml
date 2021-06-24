@@ -20,7 +20,7 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
       - run : cd MarkDownToPdfScript
       - run: npm install
-      - run: npm start
+      - run: npm start ../Markdown ../Dist/cheat-cheats-PDF.zip
       - run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
