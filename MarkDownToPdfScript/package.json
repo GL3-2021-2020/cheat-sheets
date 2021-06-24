@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "release": "release-it --minor --ci",
+    "release": "release-it --minor --ci --no-git",
     "start": "tsc && node main.js"
   },
   "repository": {
