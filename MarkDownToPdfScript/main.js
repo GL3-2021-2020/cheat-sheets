@@ -23,6 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.work = void 0;
+const fs_1 = require("fs");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
 const md_to_pdf_1 = require("md-to-pdf");
@@ -43,6 +44,9 @@ const work = async (source, target) => {
         return pdf ? { name: newName, file: pdf.content } : null;
     });
     const pdfBufferArray = await Promise.all(pdfBufferPromiseArray);
+    console.log();
+    const targetDir = path.parse(target).dir;
+    await fs_1.promises.access(targetDir).catch(() => fs_1.promises.mkdir(targetDir));
     const zipFile = new adm_zip_1.default();
     pdfBufferArray.forEach((e) => e && zipFile.addFile(e.name, e.file));
     zipFile.writeZip(target);

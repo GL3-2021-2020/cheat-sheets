@@ -27,6 +27,14 @@ export const work = async (source: string, target: string): Promise<void> => {
 
   const pdfBufferArray = await Promise.all(pdfBufferPromiseArray);
 
+  console.log();
+
+  const targetDir = path.parse(target).dir;
+
+  await fsp
+    .access(targetDir)
+    .catch(() => fsp.mkdir(targetDir, { recursive: true }));
+
   const zipFile = new AdmZip();
   pdfBufferArray.forEach((e) => e && zipFile.addFile(e.name, e.file));
   zipFile.writeZip(target);
