@@ -4,8 +4,8 @@
 name: PDF release
 
 on:
-  release:
-    types: [created]
+  push:
+    branches: [ main ]
 
 jobs:
   release:
