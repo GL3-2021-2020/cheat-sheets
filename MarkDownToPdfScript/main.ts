@@ -31,4 +31,10 @@ export const work = async (source: string, target: string): Promise<void> => {
   });
 };
 
-work("../Markdown", "../PDF");
+if (process.argv.length < 4) {
+  throw "process.argv.length < 4";
+}
+
+const [, , source, target] = process.argv;
+
+work(source, target);

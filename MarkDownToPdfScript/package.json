@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hajali-amine/cheat-sheets.git"
+    "url": "git+https://github.com/wadhah101/cheat-sheets"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hajali-amine/cheat-sheets/issues"
+    "url": "https://github.com/wadhah101/cheat-sheets/issues"
   },
-  "homepage": "https://github.com/hajali-amine/cheat-sheets#readme",
+  "homepage": "https://github.com/wadhah101/cheat-sheets#readme",
   "dependencies": {
     "md-to-pdf": "^3.3.2",
     "recursive-readdir": "^2.2.2",

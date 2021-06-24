@@ -1,0 +1,12 @@
+{
+    "npm": {
+        "publish": false
+    },
+    "github": {
+        "release": true,
+        "releaseNotes": "Demo",
+        "assets": [
+            "./*.json"
+        ]
+    }
+}
