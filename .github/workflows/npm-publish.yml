@@ -22,6 +22,7 @@ jobs:
         working-directory : ./MarkDownToPdfScript
       - run: npm start ../Markdown ../Dist/cheat-cheats-PDF.zip
         working-directory : ./MarkDownToPdfScript
+      - run : git status
       - run: npm run release 
         working-directory : ./MarkDownToPdfScript
         env:
