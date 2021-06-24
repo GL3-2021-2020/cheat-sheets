@@ -1,6 +1,6 @@
 {
   "name": "cheat-sheets",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "pdf converter",
   "main": "index.js",
   "type": "commonjs",
