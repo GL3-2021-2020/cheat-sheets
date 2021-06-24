@@ -1,4 +1,4 @@
 # cheat-sheets
 A place for all year cheat sheets.
 
-check release section for pdf archive
+click [Here](/releases) to download the PDF versions of cheat sheets
