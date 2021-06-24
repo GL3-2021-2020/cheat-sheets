@@ -18,9 +18,11 @@ jobs:
         run: |
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-      - run : cd MarkDownToPdfScript
       - run: npm install
+        working-directory : ./MarkDownToPdfScript
       - run: npm start ../Markdown ../Dist/cheat-cheats-PDF.zip
-      - run: npm run release
+        working-directory : ./MarkDownToPdfScript
+      - run: npm run release 
+        working-directory : ./MarkDownToPdfScript
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
