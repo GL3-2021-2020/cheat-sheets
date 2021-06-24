@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/wadhah101/cheat-sheets#readme",
   "dependencies": {
+    "adm-zip": "^0.5.5",
     "md-to-pdf": "^3.3.2",
     "recursive-readdir": "^2.2.2",
     "ts-node": "^10.0.0",
@@ -29,6 +30,7 @@
     "npm": "7.18.1"
   },
   "devDependencies": {
+    "@types/adm-zip": "^0.4.34",
     "@types/node": "^15.12.4",
     "@types/recursive-readdir": "^2.2.0",
     "release-it": "^14.10.0"

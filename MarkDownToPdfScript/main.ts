@@ -2,6 +2,8 @@ import { promises as fsp } from "fs";
 import * as fs from "fs";
 import * as path from "path";
 import { mdToPdf } from "md-to-pdf";
+import AdmZip from "adm-zip";
+
 import recursiveReadDir from "recursive-readdir";
 
 export const work = async (source: string, target: string): Promise<void> => {
@@ -11,24 +13,23 @@ export const work = async (source: string, target: string): Promise<void> => {
     await recursiveReadDir(source)
   ).filter((e) => path.parse(e).ext === ".md");
 
-  all.forEach(async (e) => {
+  const pdfBufferPromiseArray = all.map(async (e) => {
     const pdf = await mdToPdf({ path: e }).catch(console.error);
     const temp = path.parse(e);
-
-    // this so error prone god please forgive me
-    // TODO better replace system
-    const newDir = temp.dir.replace(source, target);
-
-    await fsp
-      .access(newDir)
-      .catch(() => fsp.mkdir(newDir, { recursive: true }));
-
+    const newDir = temp.dir.replace(source, "").substr(1);
     const newName = path.format({
       root: path.join(newDir, temp.name),
       ext: ".pdf",
     });
-    if (pdf) await fsp.writeFile(newName, pdf.content);
+
+    return pdf ? { name: newName, file: pdf.content } : null;
   });
+
+  const pdfBufferArray = await Promise.all(pdfBufferPromiseArray);
+
+  const zipFile = new AdmZip();
+  pdfBufferArray.forEach((e) => e && zipFile.addFile(e.name, e.file));
+  zipFile.writeZip(target);
 };
 
 if (process.argv.length < 4) {
